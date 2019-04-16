@@ -107,7 +107,25 @@ export class PaseoApp extends LitElement {
       this.activePage = 'guide-book';
     }
   }
-
+    
+  /**
+   * Change browser URL.
+   * @param {string} locations users
+   */
+  navigate(location) {
+    const currentPath = location.pathname.split('/');
+    if (currentPath.length > 1 && currentPath[1] == 'journey') {
+      const id = currentPath[2];
+      this.activePage = 'departure-view';
+      this.databaseAdapter.read(id).then((guidebook) => {
+        guidebook.id = id;
+        this.guidebook = guidebook;
+      });
+    } else {
+      this.activePage = 'guide-book';
+    }
+  }
+    
   /**
    * Handle writeGuidebook event.
    * @param {object} e
